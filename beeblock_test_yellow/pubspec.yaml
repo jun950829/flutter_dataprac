@@ -34,6 +34,14 @@ dependencies:
   syncfusion_flutter_gauges: ^19.2.48
   indexed_list_view: ^2.0.0
   unicorndial: ^1.1.5
+  http: ^0.13.3
+  archive: ^3.1.2
+  js: ^0.6.3
+  dio: ^4.0.0
+  fluttertoast: ^8.0.7
+  flutter_platform_widgets: ^1.9.5
+  web_socket_channel: ^2.1.0
+
 
 
   # The following adds the Cupertino Icons font to your application.

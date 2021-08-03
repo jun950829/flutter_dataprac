@@ -37,6 +37,7 @@ class MyApp extends StatelessWidget {
         initialRoute: '/',
         routes: {
           '/':(context)=>MyHomePage(title: 'BeeBlock'),
+          '/home':(context)=>MyHomePage(title: 'BeeBlock'),
           '/trade':(context)=>CoinTrade(),
         },
         //home: MyHomePage(title: 'BeeBlock'),
