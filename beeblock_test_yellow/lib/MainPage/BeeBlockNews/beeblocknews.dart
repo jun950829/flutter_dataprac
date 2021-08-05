@@ -4,6 +4,7 @@ import 'package:beeblock_test_yellow/Data/news/beeblocknews.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:beeblock_test_yellow/MainPage/BeeBlockNews/topButton.dart';
 import 'package:beeblock_test_yellow/MainPage/MenuGrid/indicator.dart';
+import 'package:beeblock_test_yellow/serviceio/unitsvctest.dart';
 
 
 class beeblockNewsWidget extends StatefulWidget {
@@ -134,86 +135,105 @@ class _beeblockState extends State<beeblockNewsWidget> {
       ),
       Container(
         //padding: EdgeInsets.only(left: 16.0.w,right: 16.0.w),
-        height: 60*6,
+        height: 60*6 + 46.0,
         color: Colors.white,
-        child: CarouselSlider.builder(
-          //itemPositionsListener: _itemPositionsListener,
-          options: CarouselOptions(
-            height: 60*6,
-            initialPage: 0,
-            scrollDirection: Axis.horizontal,
-            enableInfiniteScroll: false,
-            viewportFraction: 1.0,
-            //aspectRatio: 16/9,
-            onPageChanged: (index, reason) {
-              setState(() {
-                _itemIndex = index;
-              });
-            },
-          ),
-          itemCount: sampleBeeBlockNews.length~/7+1,
-          itemBuilder: (BuildContext context,int row,int realIndex){
-            return Container(
-              padding: EdgeInsets.only(left: 16.0,right: 16.0),
-              width: width,
+        child: FutureBuilder<dynamic> (
+          future: httpTest('https://zzzzzhahatestserver.beeblock.co.kr/api/tb_content/dashboard?category=BN&lang=ko&ver=1628152020860'),
+          builder: (BuildContext context, AsyncSnapshot snapshot) {
+            if(snapshot.hasData) {
+              return
+              Column(
+                children: [
+              CarouselSlider.builder(
+              //itemPositionsListener: _itemPositionsListener,
+              options: CarouselOptions(
               height: 60*6,
-              child: ListView.builder(
-                scrollDirection: Axis.vertical,
-                itemCount: sampleBeeBlockNews.length-6*row,
-                physics: NeverScrollableScrollPhysics(),
-                itemBuilder: (BuildContext context, int col) {
-                  int key = sampleBeeBlockNews.keys.elementAt(col+6*row);
-                  Map<String, Object> list = sampleBeeBlockNews[key];
-                  //print(list);
-                  return Container(
-                    height: 60.0,
-                    child: Padding(
-                      padding: EdgeInsets.only(top: 8.0),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text('${list['title']}',
-                          textAlign: TextAlign.center,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 14.0.sp,
-                          ),),
-                          //SizedBox(height: 1.0,),
-                          Text('${list['date']}',
-                          textAlign: TextAlign.center,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            color: Color(0xff737373),
-                            fontSize: 12.0.sp
-                          ),),
-                          Container(
-                              //padding:EdgeInsets.only(top:10.0),
-                              height: 1,
-                              width: width,
-                              color: Color(0xffECEFF1),
-                              margin: EdgeInsets.only(top:10.0),
-                          )
-                        ],
-                      ),
-                    ),
-                  );
+                initialPage: 0,
+                scrollDirection: Axis.horizontal,
+                enableInfiniteScroll: false,
+                viewportFraction: 1.0,
+                //aspectRatio: 16/9,
+                onPageChanged: (index, reason) {
+                  setState(() {
+                    _itemIndex = index;
+                  });
                 },
               ),
+            itemCount: snapshot.data["BN_BN"]["contents"].length~/7+1,
+            // itemCount: sampleBeeBlockNews.length~/7+1,
+            itemBuilder: (BuildContext context,int row,int realIndex){
+            return Container(
+            padding: EdgeInsets.only(left: 16.0,right: 16.0),
+            width: width,
+            height: 60*6,
+            child: ListView.builder(
+            scrollDirection: Axis.vertical,
+            // itemCount: sampleBeeBlockNews.length-6*row,
+            itemCount: snapshot.data["BN_BN"]["contents"].length-6*row,
+            physics: NeverScrollableScrollPhysics(),
+            itemBuilder: (BuildContext context, int col) {
+            // int key = snapshot.data["BF_DNW"]["contents"].keys.elementAt(col+6*row);
+            // int key = sampleBeeBlockNews.keys.elementAt(col+6*row);
+            // Map<String, Object> list = sampleBeeBlockNews[key];
+            Map<String, Object> list = snapshot.data["BN_BN"]["contents"][col+6*row];
+            //print(list);
+            return Container(
+            height: 60.0,
+            child: Padding(
+            padding: EdgeInsets.only(top: 8.0),
+            child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+            Text('${list['title']}',
+            textAlign: TextAlign.center,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 14.0.sp,
+            ),),
+            //SizedBox(height: 1.0,),
+            Text('${list['createdDate']}',
+            textAlign: TextAlign.center,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(
+            color: Color(0xff737373),
+            fontSize: 12.0.sp
+            ),),
+            Container(
+            //padding:EdgeInsets.only(top:10.0),
+            height: 1,
+            width: width,
+            color: Color(0xffECEFF1),
+            margin: EdgeInsets.only(top:10.0),
+            )
+            ],
+            ),
+            ),
             );
+            },
+            ),
+            );
+            },
+            ),
+                  Container(
+                    color: Colors.white,
+                    padding: EdgeInsets.only(left: 16.0.w,right: 16.0.w,top: 18.0,bottom: 18.0),
+                    //width: width,
+                    height: 46.0,
+                    alignment: Alignment.center,
+                    child: oneIndicator(snapshot.data["BN_BN"]["contents"].length~/7+1, _itemIndex),
+                  ),
+                ],
+              );
+
+            } else {
+              return Text("error");
+            }
           },
         ),
-      ),
-      Container(
-        color: Colors.white,
-        padding: EdgeInsets.only(left: 16.0.w,right: 16.0.w,top: 18.0,bottom: 18.0),
-        //width: width,
-        height: 46.0,
-        alignment: Alignment.center,
-        child: oneIndicator(sampleBeeBlockNews.length~/7+1, _itemIndex),
       ),
     ]);
   }

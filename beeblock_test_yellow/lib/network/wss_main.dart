@@ -29,6 +29,20 @@ import '../serviceio/svc50009.dart';
 import '../serviceio/svc66122.dart';
 
 
+void gSsoSvc(String firstSsoYn)
+{
+  SvcHeader svcHeader     = SvcHeader();
+
+  gRequst.clear();
+
+  UsrSvc20003 usrSvc20003 = UsrSvc20003();
+  usrSvc20003.makeUsrSvc20003(usid: gGlobalSGA.userId, encryptPswd: gGlobalSGA.encryptPswd, jsonYn: 'Y', firstSsoYn: firstSsoYn);
+  gRequst.add(svcHeader.setSvcHeader(usrSvc20003.requestData(), usrSvc20003.svcCode, gGlobalSGA.getRequestSeq()));
+  gRequst.add(usrSvc20003.requestData());
+
+  gChannel.sink.add(gRequst.toBytes());
+}
+
 void wssSsoSvc(String callType)
 {
   SvcHeader svcHeader     = SvcHeader();
@@ -46,22 +60,13 @@ void wssSsoSvc(String callType)
   gChannel.sink.add(gRequst.toBytes());
 
   // 로그인
-  if (true) {
-    gRequst.clear();
-
-    UsrSvc20003 usrSvc20003 = UsrSvc20003();
-    usrSvc20003.makeUsrSvc20003(usid: gGlobalSGA.userId, encryptPswd: gGlobalSGA.encryptPswd, jsonYn: 'Y');
-    gRequst.add(svcHeader.setSvcHeader(usrSvc20003.requestData(), usrSvc20003.svcCode, gGlobalSGA.getRequestSeq()));
-    gRequst.add(usrSvc20003.requestData());
-
-    gChannel.sink.add(gRequst.toBytes());
+  if (callType == 'test') {
+    gSsoSvc('Y');
   }
 
+  if (callType == 'test') {
+    gRequst.clear();
 
-
-  gRequst.clear();
-
-  if (callType == 'init' || callType == 'test') {
     // 리얼 등록 종목 만들기
     //8192 , 4096 => 12288
     UsrSvc50009 usrSvc50009 = UsrSvc50009();
@@ -88,8 +93,9 @@ void wssSsoSvc(String callType)
 bool onDataProc( SvcHeader svcHeader, dynamic streamBody)
 {
   try {
+    // Map<String, dynamic> result = jsonDecode(streamBody);
     //if (svcHeader.contentType != 'J') { // json 아닌 svc
-      debugPrint('svc ${svcHeader.svc}> body> ' + streamBody);
+    debugPrint('svc ${svcHeader.svc}> body> ' + streamBody);
     //}
     gGlobalSGA.responseData = streamBody;
   } catch(e) {
@@ -112,12 +118,12 @@ bool onDataProc( SvcHeader svcHeader, dynamic streamBody)
         } else {
           debugPrint('gStreamCtrl.listener.for.hoga -> not found...');
         }
-        
+
         return false;
       } else if (svcHeader.svc == 20003) {
         gGlobalSGA.parseAccnList(strBodyJson);
         svcLogonAckProc(svcHeader);
-        return false;
+        return true;
       } else {              // 일반 json View
         strBodyJson.forEach((key, value) { debugPrint('$key : $value');});
       }
@@ -156,7 +162,7 @@ bool onDataProc( SvcHeader svcHeader, dynamic streamBody)
 
       Fluttertoast.showToast(
           msg: msg,
-        //  toastLength: Toast.LENGTH_SHORT,
+          //  toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.CENTER,
           timeInSecForIosWeb: 3,
           backgroundColor: Colors.red,
@@ -179,22 +185,26 @@ void svcLogonAckProc(SvcHeader svcHeader)
   // 로그인 응답이 오면 서버에 리얼 등록처리한다.
   if (svcHeader.svc == 20003)
   {
-      // 리얼 등록 종목 만들기
-      UsrSvc50009 usrSvc50009 = UsrSvc50009();
+    gRequst.clear();
 
-      if (false) {
-        usrSvc50009.makeUsrSvc50009(type: 'S', isRegister: 'Y', dataKey: 'ETH/KRW', attr: '00008193');
-        usrSvc50009.makeUsrSvc50009(type: 'S', isRegister: 'Y', dataKey: 'BTC/KRW', attr: '00008193');
-        usrSvc50009.makeUsrSvc50009(type: 'S', isRegister: 'Y', dataKey: 'BUZ/KRW', attr: '00008193');
-      }
+    gGlobalSGA.setSsoStatus('sso'); // sso 상태..
 
-      usrSvc50009.makeUsrSvc50009(type : 'A', isRegister: 'Y', dataKey: gGlobalSGA.userId, attr: '00000004');
-      usrSvc50009.makeUsrSvc50009(type : 'A', isRegister: 'Y', dataKey: gGlobalSGA.vAccn, attr: '00000008');
+    // 로그인 응답으로, 리얼 등록 종목 만들기
+    UsrSvc50009 usrSvc50009 = UsrSvc50009();
 
-      // 리얼 등록 요청
-      gRequst.add(svcHeader.setSvcHeader(usrSvc50009.requestData(), usrSvc50009.svcCode, gGlobalSGA.getRequestSeq()));
-      gRequst.add(usrSvc50009.requestData());
-      gChannel.sink.add(gRequst.toBytes());
+    if (false) {
+      usrSvc50009.makeUsrSvc50009(type: 'S', isRegister: 'Y', dataKey: 'ETH/KRW', attr: '00008193');
+      usrSvc50009.makeUsrSvc50009(type: 'S', isRegister: 'Y', dataKey: 'BTC/KRW', attr: '00008193');
+      usrSvc50009.makeUsrSvc50009(type: 'S', isRegister: 'Y', dataKey: 'BUZ/KRW', attr: '00008193');
+    }
+
+    usrSvc50009.makeUsrSvc50009(type : 'A', isRegister: 'Y', dataKey: gGlobalSGA.userId, attr: '00000004');
+    usrSvc50009.makeUsrSvc50009(type : 'A', isRegister: 'Y', dataKey: gGlobalSGA.vAccn, attr: '00000008');
+
+    // 리얼 등록 요청
+    gRequst.add(svcHeader.setSvcHeader(usrSvc50009.requestData(), usrSvc50009.svcCode, gGlobalSGA.getRequestSeq()));
+    gRequst.add(usrSvc50009.requestData());
+    gChannel.sink.add(gRequst.toBytes());
 
   }
 
@@ -244,7 +254,7 @@ void gOnData(message)
     } else {  // 비압축데이타
 
       try {
-       // 포멧에 utf8인 자료가 아닐떄 exception이 뜸..
+        // 포멧에 utf8인 자료가 아닐떄 exception이 뜸..
         if (41000 <= svcHeader.svc && svcHeader.svc <= 45000) { // 주문응답
           recvstreamBody = String.fromCharCodes(Uint8List.view(recvstream.buffer, svcHeader.ghSize + realSiseJsonOffset));
         } else {
@@ -252,8 +262,8 @@ void gOnData(message)
         }
 
       } catch (e) {
-       // debugPrint(recvstream.buffer);
-       // debugPrint('body(1).compr0x00:  ' + svcHeader.svc.toString() + ',' + svcHeader.ghSize.toString() + ',' +  realSiseJsonOffset.toString() + ',' + recvstream.buffer.lengthInBytes.toString());
+        // debugPrint(recvstream.buffer);
+        // debugPrint('body(1).compr0x00:  ' + svcHeader.svc.toString() + ',' + svcHeader.ghSize.toString() + ',' +  realSiseJsonOffset.toString() + ',' + recvstream.buffer.lengthInBytes.toString());
         debugPrint('svc ' + svcHeader.svc.toString() + '> body(1).compr0x00:  ' + e.toString());
         return;
       }
@@ -272,8 +282,10 @@ void gOnData(message)
 
     //debugPrint('svc ' + svcHeader.svc.toString() + '> body(3)  > : body is 0');
 
-    if (svcHeader.svc == 2 || svcHeader.svc == 20 || svcHeader.svc == 50009) { // hearbeat, rtsregister skip..
+    if (svcHeader.svc == 2 || svcHeader.svc == 50009) { // hearbeat, rtsregister skip..
 
+    } else if (svcHeader.svc == 20) {
+      gGlobalSGA.setSsoStatus('sise'); // sso 상태..
     } else {
       UsrSvcObject usrSvcObject = UsrSvcObject();
       usrSvcObject.updateResponse(svcHeader, "{}");
@@ -288,7 +300,7 @@ void gListenWss(String callType) {
   debugPrint('listenWs..:' + callType);
 
   gChannel.stream.listen(( message) {
-               gOnData(message);},
+    gOnData(message);},
       onDone : gOnDone,
       onError: gOnError
   );
@@ -298,12 +310,17 @@ void gWssReConnect(String callType)
 {
   //final token = prefs.token;
 
-  Future.delayed(Duration(seconds: 10)).then((_){
+  Future.delayed(Duration(seconds: 3)).then((_){
 
     gChannel = WebSocketChannel.connect(Uri.parse(gGlobalSGA.getWsUrl()));
 
     // 시세 로그인
-    gSiseSSO();
+    // 이미 로그인 상태이면 자동 로그인 처리..
+    if (gGlobalSGA.isSsoStatus == 'sso') {
+      gSsoSvc('N');
+    } else {
+      gSiseSSO();
+    }
 
     gListenWss('websocket.reconnect:' + callType);
 
@@ -329,14 +346,14 @@ void gHeartBeat(String callType)
 
 void gSiseSSO()
 {
-    int seq = gGlobalSGA.getRequestSeq();
-    SvcHeader svcHeader     = SvcHeader();
+  int seq = gGlobalSGA.getRequestSeq();
+  SvcHeader svcHeader     = SvcHeader();
 
-    gRequst.clear();
-    gRequst.add(svcHeader.setSvcHeader(null, 20, seq));
-    gChannel.sink.add(gRequst.toBytes());
+  gRequst.clear();
+  gRequst.add(svcHeader.setSvcHeader(null, 20, seq));
+  gChannel.sink.add(gRequst.toBytes());
 
-    debugPrint('svc 20>' + ', seq: ' + seq.toString());
+  debugPrint('svc 20>' + ', seq: ' + seq.toString());
 
   //  gGlobalSGA.requestSvcMap.addEntries();
 }

@@ -41,6 +41,7 @@ dependencies:
   fluttertoast: ^8.0.7
   flutter_platform_widgets: ^1.9.5
   web_socket_channel: ^2.1.0
+  flutter_html: ^2.1.1
 
 
 

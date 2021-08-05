@@ -1,3 +1,7 @@
+import 'dart:async';
+
+import 'package:beeblock_test_yellow/network/wss_main.dart';
+import 'package:beeblock_test_yellow/serviceio/globalSGA.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -10,10 +14,72 @@ import 'LoginInfoMain/head_widget.dart';
 import 'MenuGrid/eventMenuWidget.dart';
 import 'MenuGrid/gridItem.dart';
 
-class MyHomePage extends StatelessWidget {
-  MyHomePage({Key? key, required this.title}) : super(key: key);
-
+class MyHomePage extends StatefulWidget {
   final String title;
+  String backendData = '';
+
+  MyHomePage({Key? key, required this.title, required gChannel}) : super(key: key);
+
+  // MyHomePage({Key? key, required this.title}) : super(key: key);
+
+  @override
+  _MyHomePageState createState() => _MyHomePageState();
+}
+
+
+class _MyHomePageState extends State<MyHomePage> {
+
+  Timer? _timer;
+  Map<String, dynamic>? strBodyJson;
+
+  UsrSvcRtsCheg usrSvcRtsCheg = UsrSvcRtsCheg();
+
+  TextEditingController _controller = TextEditingController();
+  late StreamSubscription _streamSubscriptionHoga;
+
+  late StreamSubscription _streamSubscriptionSise;
+
+  void initState() {
+    debugPrint('initState');
+
+    super.initState();
+
+    // 시세 로그인
+    //gSiseSSO('test');
+
+    wssSsoSvc('test');
+
+    debugPrint('initState3..');
+
+    gListenWss('init');
+
+    gHeartBeat('init');
+
+    // hogaQTimer('init');
+
+    // 데이타 소비쪽을 할 이유가 없네?
+    _streamSubscriptionHoga = gStreamCtrlHoga.stream.listen(null);
+    _streamSubscriptionSise = gStreamCtrlSise.stream.listen(null);
+  }
+
+  void hogaQTimer(String callType) {
+    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+      //  전송..
+      try {
+        //ModifyedHogaQ();
+      } catch (e) {
+        debugPrint('timer.exception>' + callType + ' >' + e.toString());
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    print("dispose");
+    _timer?.cancel();
+    gChannel.sink.close();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {

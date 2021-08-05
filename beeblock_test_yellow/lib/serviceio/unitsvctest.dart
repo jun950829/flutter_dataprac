@@ -44,7 +44,7 @@ import 'package:dio/dio.dart';
 import 'provider.dart';
 
 
-dynamic httpTest(String url) async {
+Future<dynamic> httpTest(String url) async {
   HttpSession httpSession = HttpSession();
 
   var response = await httpSession.get(url);

@@ -1,13 +1,20 @@
 // @dart=2.9
+import 'package:beeblock_test_yellow/Login/login.dart';
+import 'package:beeblock_test_yellow/testPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'MainPage/mainpage.dart';
 import 'OneCoinTrade/maincoin.dart';
+import 'serviceio/globalSGA.dart';
+import 'network/wss_main.dart';
+import 'package:flutter/cupertino.dart';
+
 
 
 
 void main() {
+
   runApp(MyApp());
 }
 
@@ -36,8 +43,9 @@ class MyApp extends StatelessWidget {
         ),
         initialRoute: '/',
         routes: {
-          '/':(context)=>MyHomePage(title: 'BeeBlock'),
-          '/home':(context)=>MyHomePage(title: 'BeeBlock'),
+          '/login':(context)=>login(),
+          '/':(context)=>MyHomePage(title: 'BeeBlock',gChannel: wssConnect(gGlobalSGA.isMode)),
+          '/example':(context)=>example(),
           '/trade':(context)=>CoinTrade(),
         },
         //home: MyHomePage(title: 'BeeBlock'),

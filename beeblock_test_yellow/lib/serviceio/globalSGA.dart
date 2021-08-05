@@ -51,6 +51,7 @@ class GlobalSGA
     String userId = '';
     String nation = 'KR';
     String media  = 'M';
+    String isSsoStatus = 'N'; // try => sise(20) => sso(20003)
     String encryptPswd = '';
     String isMode       = 'test'; // test, real
     // String testUrl    = 'wss://192.168.1.23:4999';
@@ -68,6 +69,11 @@ class GlobalSGA
     // 종목 마스터
     List _mastTable = [];
     Map   mastTable = {};
+
+    void setSsoStatus(String status)
+    {
+        isSsoStatus = status;
+    }
 
     String getWsUrl()
     {
@@ -96,11 +102,12 @@ class GlobalSGA
     {
         userId      = usid;
         encryptPswd = sha256.convert(utf8.encode(pswd)).toString();
+        isSsoStatus = 'try';
     }
 
     void parseMastTable(dynamic responseMastTable)
     {
-      //  mastTable = responseMastTable;
+        //  mastTable = responseMastTable;
 
         mastTable.clear();
 
@@ -111,8 +118,8 @@ class GlobalSGA
         }
 
         for (int x = 0; x < _mastTable.length; x++) {
-           //print('$x > ' + mastTable[x]['code'] + ',' + mastTable[x]['hnam'] + ',' + mastTable[x]['curr']);
-           mastTable.addAll({ _mastTable[x]['code'].toString() : _mastTable[x] });
+            //print('$x > ' + mastTable[x]['code'] + ',' + mastTable[x]['hnam'] + ',' + mastTable[x]['curr']);
+            mastTable.addAll({ _mastTable[x]['code'].toString() : _mastTable[x] });
         }
         if (false) {
             print(_mastTable.elementAt(3).toString());
@@ -121,10 +128,10 @@ class GlobalSGA
             print(mastTable['BUZ/KRW']['curr']);
         }
 
-      // print('------66122.1------');
+        // print('------66122.1------');
         //print(mastTable.length);
-       // mastTable.forEach((key, value) { print('$key : $value');});
-       //print('------66122.2------');
+        // mastTable.forEach((key, value) { print('$key : $value');});
+        //print('------66122.2------');
 
     }
 
@@ -180,7 +187,7 @@ class GlobalSGA
         var cData = responseAccnList['cData'];
         for (int x = 0; x < cData.length; x++) {
             if (cData[x]['item_sect'] == '00') {
-               // print('svc20003> $x > ' + cData[x]['v_accn'] + ',' + cData[x]['accn_type'] + ',' + cData[x]['currency'] + ',' + cData[x]['item_sect']);
+                // print('svc20003> $x > ' + cData[x]['v_accn'] + ',' + cData[x]['accn_type'] + ',' + cData[x]['currency'] + ',' + cData[x]['item_sect']);
 
                 vAccn    = cData[x]['v_accn'];
                 currency = cData[x]['currency'];

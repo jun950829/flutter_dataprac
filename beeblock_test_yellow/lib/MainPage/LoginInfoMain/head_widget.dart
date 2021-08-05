@@ -62,14 +62,19 @@ class _headWidgetState extends State<headWidget> {
                       ),)
                     ],
                   ),
-                  Container(
-                    width: 30.w,
-                    height: 30.w,
-                    decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.3),
-                      shape: BoxShape.circle,
+                  new GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(context,'/login');
+                    },
+                    child: Container(
+                      width: 30.w,
+                      height: 30.w,
+                      decoration: BoxDecoration(
+                        color: Colors.white.withOpacity(0.3),
+                        shape: BoxShape.circle,
+                      ),
+                      child: Icon(Icons.more_vert),
                     ),
-                    child: Icon(Icons.more_vert),
                   )
                 ],
               ),
