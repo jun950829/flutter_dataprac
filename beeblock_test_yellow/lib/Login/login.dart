@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:rxdart/rxdart.dart';
 
 import 'package:beeblock_test_yellow/network/wss_main.dart';
 import 'package:beeblock_test_yellow/serviceio/globalSGA.dart';
@@ -43,6 +44,10 @@ class _loginState extends State<login> {
 
     SvcHeader gHeader = SvcHeader();
 
+
+    final thisStream = gStreamCtrlSvc.stream.mergeWith([gStreamCtrlSise.stream]);
+
+
     //gRequst.clear();
 
     return Scaffold(
@@ -81,16 +86,22 @@ class _loginState extends State<login> {
                 }, child: Icon(Icons.print),
             ),
             StreamBuilder(
-              stream: gStreamCtrlSvc.stream,
+              stream: thisStream,
               builder: (BuildContext context, AsyncSnapshot snapshot){
-                if(snapshot.hasData) {
+                if(snapshot.data is String){
+                return Text(snapshot.data);
+                }
+                else if(snapshot.hasData) {
                   UsrSvcObject usrSvcObject = snapshot.data;
-                  Map<String, dynamic> result = jsonDecode(usrSvcObject.responseSvcObject);
-                  return Text('header: svc(${usrSvcObject.responseHeader.svc}), seq(${usrSvcObject.responseHeader.seq})' +
+                  Map<String, dynamic> result = jsonDecode(
+                      usrSvcObject.responseSvcObject);
+                  return Text('header: svc(${usrSvcObject.responseHeader
+                      .svc}), seq(${usrSvcObject.responseHeader.seq})' +
                       '\nbody    :' +
                       '${result["userid"]}');
+                }
 
-                } else {
+                else {
                   return Text('데이터 로딩 실패');
                 }
               })
