@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="NONE" />
+  </component>
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="c7b16891-c72e-4668-aeac-30dfb5177490" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Dart File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1wCzD5a89F1YMqY7UElRANFl02j" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="android.sdk.path" value="$USER_HOME$/AppData/Local/Android/Sdk" />
+    <property name="dart.analysis.tool.window.visible" value="false" />
+    <property name="io.flutter.reload.alreadyRun" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="AndroidSdkUpdater" />
+    <property name="show.migrate.to.gradle.popup" value="false" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\win\Desktop\Flutter_work\flutter_dataprac\beeblock_test_yellow\lib\Login" />
+      <recent name="C:\Users\win\Desktop\Flutter_work\flutter_dataprac\beeblock_test_yellow\lib" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="Unnamed" type="FlutterRunConfigurationType" factoryName="Flutter" nameIsGenerated="true">
+      <option name="filePath" value="$PROJECT_DIR$/beeblock_test_yellow/lib/main.dart" />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="c7b16891-c72e-4668-aeac-30dfb5177490" name="Default Changelist" comment="" />
+      <created>1627977235591</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1627977235591</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="2334" y="175" width="1092" height="715" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1627979120534">
+      <screen x="1920" y="0" width="1920" height="1040" />
+    </state>
+    <state x="2334" y="175" width="1092" height="715" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1627979120534" />
+    <state x="2609" y="322" key="#com.intellij.ide.util.TreeFileChooserDialog" timestamp="1627979110050">
+      <screen x="1920" y="0" width="1920" height="1040" />
+    </state>
+    <state x="2609" y="322" key="#com.intellij.ide.util.TreeFileChooserDialog/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1627979110050" />
+    <state x="2012" y="92" width="1736" height="856" key="AVDManager" timestamp="1628560611943">
+      <screen x="1920" y="0" width="1920" height="1040" />
+    </state>
+    <state x="2012" y="92" width="1736" height="856" key="AVDManager/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1628237975611" />
+    <state x="2012" y="92" width="1736" height="856" key="AVDManager/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1628560611943" />
+    <state x="2660" y="275" key="FileChooserDialogImpl" timestamp="1628497758963">
+      <screen x="1920" y="0" width="1920" height="1040" />
+    </state>
+    <state x="2660" y="275" key="FileChooserDialogImpl/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1628497758963" />
+    <state width="1877" height="293" key="GridCell.Tab.0.bottom" timestamp="1628582634067">
+      <screen x="1920" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="265" key="GridCell.Tab.0.bottom/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1628238207580" />
+    <state width="1877" height="293" key="GridCell.Tab.0.bottom/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1628582634067" />
+    <state width="1877" height="293" key="GridCell.Tab.0.center" timestamp="1628582634067">
+      <screen x="1920" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="265" key="GridCell.Tab.0.center/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1628238207580" />
+    <state width="1877" height="293" key="GridCell.Tab.0.center/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1628582634067" />
+    <state width="1877" height="293" key="GridCell.Tab.0.left" timestamp="1628582634067">
+      <screen x="1920" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="265" key="GridCell.Tab.0.left/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1628238207580" />
+    <state width="1877" height="293" key="GridCell.Tab.0.left/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1628582634067" />
+    <state width="1877" height="293" key="GridCell.Tab.0.right" timestamp="1628582634067">
+      <screen x="1920" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="265" key="GridCell.Tab.0.right/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1628238207580" />
+    <state width="1877" height="293" key="GridCell.Tab.0.right/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1628582634067" />
+    <state x="542" y="162" key="SettingsEditor" timestamp="1628227587678">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="542" y="162" key="SettingsEditor/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1628227587678" />
+    <state x="2381" y="164" key="SettingsEditor/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1627977745057" />
+    <state x="2485" y="130" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1628057697062">
+      <screen x="1920" y="0" width="1920" height="1040" />
+    </state>
+    <state x="2485" y="130" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1628057697062" />
+    <state x="2589" y="236" width="582" height="568" key="find.popup" timestamp="1628571960468">
+      <screen x="1920" y="0" width="1920" height="1040" />
+    </state>
+    <state x="669" y="236" width="582" height="568" key="find.popup/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1628228439802" />
+    <state x="2589" y="236" width="582" height="568" key="find.popup/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1628571960468" />
+    <state x="2536" y="240" key="run.anything.popup" timestamp="1628126656671">
+      <screen x="1920" y="0" width="1920" height="1040" />
+    </state>
+    <state x="2536" y="240" key="run.anything.popup/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1628126656671" />
+    <state x="2543" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1628502223715">
+      <screen x="1920" y="0" width="1920" height="1040" />
+    </state>
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1628227544885" />
+    <state x="2543" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1628502223715" />
+  </component>
+</project>

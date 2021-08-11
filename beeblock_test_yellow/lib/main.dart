@@ -10,11 +10,7 @@ import 'serviceio/globalSGA.dart';
 import 'network/wss_main.dart';
 import 'package:flutter/cupertino.dart';
 
-
-
-
 void main() {
-
   runApp(MyApp());
 }
 
@@ -23,30 +19,30 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      designSize:Size(414,896),
-      builder:()=> MaterialApp(
+      designSize: Size(414, 896),
+      builder: () => MaterialApp(
         scrollBehavior: MyBehavior(),
         title: 'Flutter Demo',
         theme: ThemeData(
-          primaryColor: Colors.white,
-          fontFamily: 'NotoSansKR',
-          textSelectionTheme: TextSelectionThemeData(
-            //selectionHandleColor: Colors.transparent,
-            cursorColor: Colors.black,
-            selectionColor: Color(0xffFFBC00),
-            selectionHandleColor: Colors.transparent,
-          )
-        ),
+            primaryColor: Colors.white,
+            fontFamily: 'NotoSansKR',
+            textSelectionTheme: TextSelectionThemeData(
+              //selectionHandleColor: Colors.transparent,
+              cursorColor: Colors.black,
+              selectionColor: Color(0xffFFBC00),
+              selectionHandleColor: Colors.transparent,
+            )),
         darkTheme: ThemeData(
           brightness: Brightness.dark,
           primaryColor: Colors.lightBlue[900],
         ),
         initialRoute: '/',
         routes: {
-          '/login':(context)=>login(),
-          '/':(context)=>MyHomePage(title: 'BeeBlock',gChannel: wssConnect(gGlobalSGA.isMode)),
-          '/example':(context)=>example(),
-          '/trade':(context)=>CoinTrade(),
+          '/login': (context) => login(),
+          '/': (context) => MyHomePage(
+              title: 'BeeBlock', gChannel: wssConnect(gGlobalSGA.isMode)),
+          '/example': (context) => example(),
+          '/trade': (context) => CoinTrade(),
         },
         //home: MyHomePage(title: 'BeeBlock'),
       ),

@@ -72,8 +72,8 @@ void wssSsoSvc(String callType)
     UsrSvc50009 usrSvc50009 = UsrSvc50009();
     if (true) {
       usrSvc50009.makeUsrSvc50009(type: 'S', isRegister: 'Y', dataKey: 'ETH/KRW', attr: '00008193');
-      usrSvc50009.makeUsrSvc50009(type: 'S', isRegister: 'Y', dataKey: 'BTC/KRW', attr: '00008193');
-      usrSvc50009.makeUsrSvc50009(type: 'S', isRegister: 'Y', dataKey: 'BUZ/KRW', attr: '00008193');
+      //usrSvc50009.makeUsrSvc50009(type: 'S', isRegister: 'Y', dataKey: 'BTC/KRW', attr: '00008193');
+      //usrSvc50009.makeUsrSvc50009(type: 'S', isRegister: 'Y', dataKey: 'BUZ/KRW', attr: '00008193');
     }
 
     usrSvc50009.makeUsrSvc50009(type : 'A', isRegister: 'Y', dataKey: gGlobalSGA.userId, attr: '00000004');

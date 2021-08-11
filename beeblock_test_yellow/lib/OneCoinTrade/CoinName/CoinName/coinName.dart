@@ -1,3 +1,9 @@
+import 'dart:convert';
+import 'package:rxdart/rxdart.dart';
+
+import 'package:beeblock_test_yellow/serviceio/globalSGA.dart';
+import 'package:beeblock_test_yellow/serviceio/svc102032.dart';
+import 'package:beeblock_test_yellow/serviceio/svcheader.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -17,114 +23,36 @@ class CoinNameWidget extends StatefulWidget {
 }
 
 class _CoinNameState extends State<CoinNameWidget> {
-  final double _price;
-  final double _percentage;
+  double _price;
+  double _percentage;
+
+  SvcHeader gHeader = SvcHeader();
 
   var won = NumberFormat('###,###,###,###.##', "en_US");
 
   _CoinNameState(this._price, this._percentage);
 
+  final mainStream = gStreamCtrlSvc.stream.mergeWith([gStreamCtrlSise.stream]);
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    gRequst.clear();
+    UsrSvc102032 usrSvc102032 = UsrSvc102032();
+    usrSvc102032.makeUsrSvc102032(code: 'ETH/KRW');
+    gRequst.add(gHeader.setSvcHeader(usrSvc102032.requestData(), usrSvc102032.svcCode, gGlobalSGA.getRequestSeq()));
+    gRequst.add(usrSvc102032.requestData());
+
+    gChannel.sink.add(gRequst.toBytes());
+
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Center(
-      /*child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Container(
-            width: MediaQuery.of(context).size.width - 32.w,
-            height: 24,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                InkWell(
-                  child: Row(
-                    children: [
-                      Text(
-                        '${sampleCoinData['BTC']['name']} ${sampleCoinData['BTC']['code']}',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 16.0.sp,
-                        ),
-                      ),
-                      Icon(
-                        Icons.arrow_drop_down,
-                        size: 24.0.w,
-                      ),
-                    ],
-                  ),
-                  onTap: () {
-                    showModalBottomSheet(
-                        context: context,
-                        builder: buildBottomSheet,
-                        //backgroundColor: Colors.white,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.vertical(
-                                top: Radius.circular(20))),
-                        clipBehavior: Clip.antiAliasWithSaveLayer);
-                  },
-                ),
-                Row(
-                  children: [
-                    Text(
-                      '5.848178',
-                      style: TextStyle(
-                          fontSize: 12.0.sp, fontWeight: FontWeight.bold),
-                    ),
-                    Text(
-                      ' 거래량 (24H)',
-                      style: TextStyle(
-                          fontSize: 10.0.sp, color: Color(0xff737373)),
-                    ),
-                  ],
-                )
-              ],
-            ),
-          ),      /// 코인이름 & 거래량(24H)
-          Container(
-            width: MediaQuery.of(context).size.width - 32.w,
-            height: 35,
-            //padding: EdgeInsets.only(bottom: 5),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        '${won.format(sampleCoinData['BTC']['price'])}',
-                        style: TextStyle(
-                            color: Color(0xffD8352C),
-                            fontSize: 20.0.sp,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      Icon(
-                        Icons.arrow_drop_up_sharp,
-                        color: Color(0xffD8352C),
-                      ),
-                      Text(
-                        '${won.format(_price)}',
-                        style: TextStyle(
-                            color: Color(0xffD8352C),
-                            fontSize: 12.0.sp,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      Text(
-                        ' (${(_percentage.toStringAsFixed(2))}%)',
-                        style: TextStyle(
-                            color: Color(0xffD8352C),
-                            fontSize: 12.0.sp,
-                            fontWeight: FontWeight.bold),
-                      )
-                    ]),
-                MiniChart()
-              ],
-            ),
-          )
-        ],
-      ),*/
       child: Container(
         height: 64,
         color: Colors.white,
@@ -138,7 +66,8 @@ class _CoinNameState extends State<CoinNameWidget> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 InkWell(
-                  child: Container(
+                  child:
+                  Container(
                     height:24,
                     child: Row(
                       children: [
@@ -173,24 +102,84 @@ class _CoinNameState extends State<CoinNameWidget> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Text(
-                          '${won.format(sampleCoinData['BTC']['price'])}',
-                          style: TextStyle(
-                              color: Color(0xffD8352C),
-                              fontSize: 20.0.sp,
-                              fontWeight: FontWeight.bold),
-                        ),
+                        //현재가
+                        StreamBuilder(
+                            stream: mainStream,
+                            builder: (BuildContext context, AsyncSnapshot snapshot){
+                              //sise 면
+                              if(snapshot.data is String) {
+                                UsrSvcRtsCheg usrSvcRtsCheg = UsrSvcRtsCheg();
+                                usrSvcRtsCheg.parseData(snapshot.data);
+                                return Text(usrSvcRtsCheg.curr,
+                                  style: TextStyle(
+                                      color: Color(0xffD8352C),
+                                      fontSize: 20.0.sp,
+                                      fontWeight: FontWeight.bold),
+                                );
+                              }
+                              //svc면
+                              else if(snapshot.hasData) {
+                                UsrSvcObject usrSvcObject = snapshot.data;
+                                Map<String, dynamic> result = jsonDecode(
+                                    usrSvcObject.responseSvcObject);
+                                return Text(result["ticker"]["price"],
+                                  style: TextStyle(
+                                    color: Color(0xffD8352C),
+                                    fontSize: 20.0.sp,
+                                    fontWeight: FontWeight.bold),
+                                );
+                              } else {
+                                return Text('no data');
+                              }
+                            }),
+                        // Text(
+                        //   '${won.format(sampleCoinData['BTC']['price'])}',
+                        //   style: TextStyle(
+                        //       color: Color(0xffD8352C),
+                        //       fontSize: 20.0.sp,
+                        //       fontWeight: FontWeight.bold),
+                        // ),
                         Icon(
                           Icons.arrow_drop_up_sharp,
                           color: Color(0xffD8352C),
                         ),
-                        Text(
-                          '${won.format(_price)}',
-                          style: TextStyle(
-                              color: Color(0xffD8352C),
-                              fontSize: 12.0.sp,
-                              fontWeight: FontWeight.bold),
-                        ),
+                        //등락률
+                        StreamBuilder(
+                            stream: mainStream,
+                            builder: (BuildContext context, AsyncSnapshot snapshot){
+                              //sise 면
+                              if(snapshot.data is String) {
+                                UsrSvcRtsCheg usrSvcRtsCheg = UsrSvcRtsCheg();
+                                usrSvcRtsCheg.parseData(snapshot.data);
+                                return Text(usrSvcRtsCheg.rate,
+                                  style: TextStyle(
+                                      color: Color(0xffD8352C),
+                                      fontSize: 12.0.sp,
+                                      fontWeight: FontWeight.bold),
+                                );
+                              }
+                              //svc면
+                              else if(snapshot.hasData) {
+                                UsrSvcObject usrSvcObject = snapshot.data;
+                                Map<String, dynamic> result = jsonDecode(
+                                    usrSvcObject.responseSvcObject);
+                                return Text(result["ticker"]["change"],
+                                  style: TextStyle(
+                                    color: Color(0xffD8352C),
+                                    fontSize: 12.0.sp,
+                                    fontWeight: FontWeight.bold),
+                                );
+                              } else {
+                                return Text('no data');
+                              }
+                            }),
+                        // Text(
+                        //   '${won.format(_price)}',
+                        //   style: TextStyle(
+                        //       color: Color(0xffD8352C),
+                        //       fontSize: 12.0.sp,
+                        //       fontWeight: FontWeight.bold),
+                        // ),
                         Text(
                           ' (${(_percentage.toStringAsFixed(2))}%)',
                           style: TextStyle(
@@ -209,13 +198,33 @@ class _CoinNameState extends State<CoinNameWidget> {
                   alignment: Alignment.center,
                   child: Row(
                     children: [
+                      StreamBuilder(
+                          stream: mainStream,
+                          builder: (BuildContext context, AsyncSnapshot snapshot){
+                            //sise 면
+                            if(snapshot.data is String) {
+                              UsrSvcRtsCheg usrSvcRtsCheg = UsrSvcRtsCheg();
+                              usrSvcRtsCheg.parseData(snapshot.data);
+                              return Text(usrSvcRtsCheg.h24gvol,
+                                  style: TextStyle(
+                                      fontSize: 12.0.sp, fontWeight: FontWeight.bold),
+                                  );
+                            }
+                            //svc면
+                            else if(snapshot.hasData) {
+                              UsrSvcObject usrSvcObject = snapshot.data;
+                              Map<String, dynamic> result = jsonDecode(
+                                  usrSvcObject.responseSvcObject);
+                              return Text(result["ticker"]["h24_gvol"],
+                                style: TextStyle(
+                                    fontSize: 12.0.sp, fontWeight: FontWeight.bold),
+                              );
+                            } else {
+                              return Text('no data');
+                            }
+                          }),
                       Text(
-                        '5.848178',
-                        style: TextStyle(
-                            fontSize: 12.0.sp, fontWeight: FontWeight.bold),
-                      ),
-                      Text(
-                        ' 거래량 (24H)',
+                        '거래량 (24H)',
                         style: TextStyle(
                             fontSize: 10.0.sp, color: Color(0xff737373)),
                       ),
