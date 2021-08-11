@@ -47,7 +47,7 @@ void wssSsoSvc(String callType)
 {
   SvcHeader svcHeader     = SvcHeader();
 
-  debugPrint('wssSsoSvc');
+  //debugPrint('wssSsoSvc');
 
   gRequst.clear();
 
@@ -95,7 +95,9 @@ bool onDataProc( SvcHeader svcHeader, dynamic streamBody)
   try {
     // Map<String, dynamic> result = jsonDecode(streamBody);
     //if (svcHeader.contentType != 'J') { // json 아닌 svc
-    debugPrint('svc ${svcHeader.svc}> body> ' + streamBody);
+
+    //debugPrint('svc ${svcHeader.svc}> body> ' + streamBody);
+
     //}
     gGlobalSGA.responseData = streamBody;
   } catch(e) {

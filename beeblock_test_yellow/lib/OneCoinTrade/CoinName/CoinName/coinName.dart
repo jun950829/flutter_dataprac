@@ -47,6 +47,8 @@ class _CoinNameState extends State<CoinNameWidget> {
 
     gChannel.sink.add(gRequst.toBytes());
 
+    print('init!!');
+
   }
 
 
@@ -110,7 +112,8 @@ class _CoinNameState extends State<CoinNameWidget> {
                               if(snapshot.data is String) {
                                 UsrSvcRtsCheg usrSvcRtsCheg = UsrSvcRtsCheg();
                                 usrSvcRtsCheg.parseData(snapshot.data);
-                                return Text(usrSvcRtsCheg.curr,
+                                return Text(
+                                    double.parse(usrSvcRtsCheg.curr).floor().toString(),
                                   style: TextStyle(
                                       color: Color(0xffD8352C),
                                       fontSize: 20.0.sp,
@@ -143,7 +146,7 @@ class _CoinNameState extends State<CoinNameWidget> {
                           Icons.arrow_drop_up_sharp,
                           color: Color(0xffD8352C),
                         ),
-                        //등락률
+                        //등락가
                         StreamBuilder(
                             stream: mainStream,
                             builder: (BuildContext context, AsyncSnapshot snapshot){
@@ -151,7 +154,8 @@ class _CoinNameState extends State<CoinNameWidget> {
                               if(snapshot.data is String) {
                                 UsrSvcRtsCheg usrSvcRtsCheg = UsrSvcRtsCheg();
                                 usrSvcRtsCheg.parseData(snapshot.data);
-                                return Text(usrSvcRtsCheg.rate,
+                                return Text(
+                                double.parse(usrSvcRtsCheg.diff).floor().toString(),
                                   style: TextStyle(
                                       color: Color(0xffD8352C),
                                       fontSize: 12.0.sp,
@@ -180,13 +184,44 @@ class _CoinNameState extends State<CoinNameWidget> {
                         //       fontSize: 12.0.sp,
                         //       fontWeight: FontWeight.bold),
                         // ),
-                        Text(
-                          ' (${(_percentage.toStringAsFixed(2))}%)',
-                          style: TextStyle(
-                              color: Color(0xffD8352C),
+                        //등락률
+                        StreamBuilder(
+                            stream: mainStream,
+                            builder: (BuildContext context, AsyncSnapshot snapshot){
+                              //sise 면
+                              if(snapshot.data is String) {
+                                UsrSvcRtsCheg usrSvcRtsCheg = UsrSvcRtsCheg();
+                                usrSvcRtsCheg.parseData(snapshot.data);
+                                return Text(
+                                ' ( ${usrSvcRtsCheg.rate} %)',
+                                  style: TextStyle(
+                                      color: Color(0xffD8352C),
                               fontSize: 12.0.sp,
                               fontWeight: FontWeight.bold),
-                        )
+                                );
+                              }
+                              //svc면
+                              else if(snapshot.hasData) {
+                                UsrSvcObject usrSvcObject = snapshot.data;
+                                Map<String, dynamic> result = jsonDecode(
+                                    usrSvcObject.responseSvcObject);
+                                return Text(' ( ${result["ticker"]["rate"]} %)',
+                                  style: TextStyle(
+                                    color: Color(0xffD8352C),
+                              fontSize: 12.0.sp,
+                              fontWeight: FontWeight.bold),
+                                );
+                              } else {
+                                return Text('no data');
+                              }
+                            }),
+                        // Text(
+                        //   ' (${(_percentage.toStringAsFixed(2))}%)',
+                        //   style: TextStyle(
+                        //       color: Color(0xffD8352C),
+                        //       fontSize: 12.0.sp,
+                        //       fontWeight: FontWeight.bold),
+                        // )
                       ]),
                 )
               ],
@@ -205,7 +240,8 @@ class _CoinNameState extends State<CoinNameWidget> {
                             if(snapshot.data is String) {
                               UsrSvcRtsCheg usrSvcRtsCheg = UsrSvcRtsCheg();
                               usrSvcRtsCheg.parseData(snapshot.data);
-                              return Text(usrSvcRtsCheg.h24gvol,
+                              return Text(
+                                double.parse(usrSvcRtsCheg.h24gvol).toStringAsFixed(4),
                                   style: TextStyle(
                                       fontSize: 12.0.sp, fontWeight: FontWeight.bold),
                                   );

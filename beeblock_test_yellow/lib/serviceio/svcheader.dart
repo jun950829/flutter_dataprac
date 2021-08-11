@@ -216,13 +216,15 @@ class SvcHeader
 
   void fieldPrint()
   {
-    print('-------------------------------------- ');
-    print('header.len/svc/unComprLen/crypto/compr/content_type/media> ' + _len.toString() + ',' + _svc.toString() + ',' + unComprLen.toString()
-        + ',' + _crypto.toString() + ',' + _compr.toString() + ',' + _contentType
-        + ',' + String.fromCharCode(_media));
+    //print('-------------------------------------- ');
+    //print('header.len/svc/unComprLen/crypto/compr/content_type/media> ' + _len.toString() + ',' + _svc.toString() + ',' + unComprLen.toString()
+    //    + ',' + _crypto.toString() + ',' + _compr.toString() + ',' + _contentType
+    //    + ',' + String.fromCharCode(_media));
+
     // print('header.crypto/compr/content_type> ' + _crypto.toString() + ',' + _compr.toString() + ',' + _contentType);
-    print('header.usid                     > [' + _usid + ']');
-    print('header.seq/ret/err_yn/ret_msg   > ' + _seq.toString() + ','+ _ret.toString() + ',' + _errYn + ',' + _retMsg);
+
+    //print('header.usid                     > [' + _usid + ']');
+    //print('header.seq/ret/err_yn/ret_msg   > ' + _seq.toString() + ','+ _ret.toString() + ',' + _errYn + ',' + _retMsg);
   }
 
   void stringPrint()
